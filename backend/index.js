@@ -14,3 +14,5 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use('/tasks', TaskRouter);
+
+module.exports = app;
