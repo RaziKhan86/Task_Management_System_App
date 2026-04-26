@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaBeer, FaCheck, FaPencilAlt, FaPlus, FaSearch, FaTrash } from "react-icons/fa";
+import { FaCheck, FaPencilAlt, FaPlus, FaSearch, FaTrash } from "react-icons/fa";
 import { ToastContainer } from 'react-toastify'
 import { creatTask, DeteleTask, GetAllTask, UpdateTask } from './api';
 import { notify } from './utils';
@@ -42,24 +42,28 @@ export default function TaskManager() {
                 notify(message, 'success')
             } else {
                 //Show error Toast
-                notify(message, 'success')
+                notify(message, 'error')
 
             }
             fetchAllTasks();
         } catch (error) {
             console.log(error);
-            notify('Failed to Create Task', 'success')
+            notify('Failed to Create Task', 'error')
 
         }
     }
     const fetchAllTasks = async () => {
         try {
             const { success, message, data } = await GetAllTask();
+            if (!success) {
+                notify(message, "error");
+                return;
+            }
             setTasks(data);
             setCopyTasks(data);
         } catch (error) {
             console.log(error);
-            notify('Failed to Create Task', 'success')
+            notify('Failed to Create Task', 'error')
 
         }
     }
@@ -75,13 +79,13 @@ export default function TaskManager() {
                 notify(message, 'success')
             } else {
                 //Show error Toast
-                notify(message, 'success')
+                notify(message, 'error')
 
             }
             fetchAllTasks();
         } catch (error) {
             console.log(error);
-            notify('Failed to Create Task', 'success')
+            notify('Failed to Create Task', 'error')
 
         }
     }
@@ -133,10 +137,10 @@ export default function TaskManager() {
 
         }
     }
-    const HandleSearch = (e)=>{
+    const HandleSearch = (e) => {
         const term = e.target.value.toLowerCase();
         const oldTasks = [...copyTasks];
-        const result = oldTasks.filter((item)=> item.taskName.toLowerCase().includes(term))
+        const result = oldTasks.filter((item) => item.taskName.toLowerCase().includes(term))
         setTasks(result);
     }
     return (
@@ -170,10 +174,10 @@ export default function TaskManager() {
                         {/* Search */}
                         <div className="input-group mb-4">
                             <span className="input-group-text bg-light border-0">
-                                <FaSearch/>
+                                <FaSearch />
                             </span>
                             <input
-                               onChange={HandleSearch}
+                                onChange={HandleSearch}
                                 type="text"
                                 className="form-control border-0 bg-light"
                                 placeholder="Search tasks..."
