@@ -10,7 +10,12 @@ app.get('/',(req,res)=>{
     res.send("Hello Server...");
 })
 
-app.use(cors());
+app.use(cors({
+    origin: "https://task-management-system-app-three.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
+app.options("*", cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use('/tasks', TaskRouter);
