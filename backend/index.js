@@ -14,3 +14,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use('/tasks', TaskRouter);
+
+app.listen(PORT,()=>{
+    console.log("Server is runing...")
+})
