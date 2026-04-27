@@ -6,18 +6,23 @@ const TaskRouter = require('./Routes/TaskRouter.js');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8000;
 const cors = require('cors');
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+}));
+app.options(/.*/, cors());
+app.use(express.json())
 app.get('/',(req,res)=>{
     res.send("Hello Server...");
 })
 
-app.use(cors({
-    origin: "https://task-management-system-app-three.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}));
-app.options("*", cors());
+
+
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use('/tasks', TaskRouter);
 
-module.exports = app;
+// app.listen(PORT,()=>{
+//     console.log("Server is runing...");
+// })
