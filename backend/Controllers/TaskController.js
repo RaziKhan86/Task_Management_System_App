@@ -2,7 +2,7 @@ const TaskModel = require("../Models/TaskModel");
 
 const createTask = async (req,res)=>{
     const data = req.body;
-    console.log(data);
+    // console.log(data);
     try {
         const model = new TaskModel(data);
         await model.save();
